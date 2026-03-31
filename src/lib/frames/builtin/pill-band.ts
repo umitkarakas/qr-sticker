@@ -1,21 +1,24 @@
 import type { FrameTemplate } from '../types';
 
-// Pill/stadium shape — wide rounded rectangle
-const PILL = 'M 30,10 H 170 A 30,30 0 0 1 170,130 H 30 A 30,30 0 0 1 30,10 Z';
+// Stadium / landscape pill shape
+// viewBox: 0 0 300 200 — r=90 gives perfect semicircle caps
+// M 90,10 → line to 210,10 → right semicircle down to 210,190 → line to 90,190 → left semicircle up to 90,10
+const STADIUM =
+  'M 90,10 H 210 A 90,90 0 0 1 210,190 H 90 A 90,90 0 0 1 90,10 Z';
 
 export const pillBandFrame: FrameTemplate = {
   id: 'pill-band',
-  name: 'Hap',
+  name: 'Stadium',
   category: 'banded',
-  viewBox: '0 0 200 180',
-  clipPath: PILL,
-  outlinePath: PILL,
-  qrZone: { x: 40, y: 15, width: 120, height: 100 },
+  viewBox: '0 0 300 200',
+  clipPath: STADIUM,
+  outlinePath: STADIUM,
+  qrZone: { x: 100, y: 20, width: 100, height: 120 },
   ctaBand: {
     position: 'bottom',
-    height: 34,
+    height: 42,
     backgroundColor: '#0f172a',
-    textY: 153,
+    textY: 181,
   },
   decorativeLayers: [],
 };
