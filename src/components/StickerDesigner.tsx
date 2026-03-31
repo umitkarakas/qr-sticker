@@ -62,13 +62,8 @@ export function StickerDesigner() {
         </div>
 
         {/* Right panel — preview */}
-        <div className="flex-1 bg-gray-50 flex flex-col items-center justify-center p-8 gap-6">
+        <div className="flex-1 bg-gray-50 flex flex-col items-center justify-center p-8">
           <StickerPreview />
-
-          <p className="text-xs text-gray-400 text-center max-w-xs">
-            PNG çıktısı 800×800px @ 3x (baskı kalitesi).
-            SVG dosyası sınırsız çözünürlük.
-          </p>
         </div>
       </div>
     </div>

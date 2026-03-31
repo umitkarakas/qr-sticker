@@ -95,11 +95,11 @@ export function StickerPreview() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      {/* Preview canvas */}
+    <div className="flex flex-col items-center gap-4 w-full">
+      {/* Preview canvas — overflow-hidden prevents SVG from bleeding over buttons */}
       <div
         ref={containerRef}
-        className="relative w-72 h-72 flex items-center justify-center bg-[#f0f0f0] rounded-2xl border border-gray-200"
+        className="relative w-72 h-72 flex items-center justify-center bg-[#f0f0f0] rounded-2xl border border-gray-200 overflow-hidden"
         style={{
           backgroundImage:
             'repeating-conic-gradient(#ccc 0% 25%, transparent 0% 50%) 0 0 / 16px 16px',
@@ -113,7 +113,7 @@ export function StickerPreview() {
 
         {svgString ? (
           <div
-            className="w-64 h-64"
+            className="w-full h-full"
             dangerouslySetInnerHTML={{ __html: svgString }}
           />
         ) : error ? (
@@ -128,8 +128,8 @@ export function StickerPreview() {
         )}
       </div>
 
-      {/* Export buttons */}
-      <div className="flex gap-2">
+      {/* Export buttons — always below canvas, never overlapped */}
+      <div className="flex gap-2 shrink-0">
         <button
           onClick={handleDownloadPng}
           disabled={!svgString || loading}
@@ -147,6 +147,12 @@ export function StickerPreview() {
           SVG indir
         </button>
       </div>
+
+      {/* Info — always at bottom */}
+      <p className="text-xs text-gray-400 text-center max-w-xs shrink-0">
+        PNG çıktısı 800×800px @ 3x (baskı kalitesi).{' '}
+        SVG dosyası sınırsız çözünürlük.
+      </p>
     </div>
   );
 }

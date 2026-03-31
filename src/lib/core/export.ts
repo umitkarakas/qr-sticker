@@ -1,3 +1,18 @@
+/** Replace width/height="100%" with the viewBox pixel values so the SVG
+ *  has a real intrinsic size when loaded as a standalone blob <img>. */
+function withNaturalSize(svgString: string): string {
+  const vbMatch = svgString.match(/viewBox="([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)"/);
+  if (!vbMatch) return svgString;
+  const [, , , w, h] = vbMatch;
+  return svgString.replace(
+    /<svg([^>]*)>/,
+    (_, attrs: string) => {
+      const clean = attrs.replace(/\s*(width|height)="[^"]*"/g, '');
+      return `<svg${clean} width="${w}" height="${h}">`;
+    }
+  );
+}
+
 export async function exportToPng(
   svgString: string,
   width: number = 800,
@@ -7,7 +22,7 @@ export async function exportToPng(
   const scaledWidth = width * scale;
   const scaledHeight = height * scale;
 
-  const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+  const blob = new Blob([withNaturalSize(svgString)], { type: 'image/svg+xml;charset=utf-8' });
   const url = URL.createObjectURL(blob);
 
   try {
@@ -42,7 +57,7 @@ export async function exportToPng(
 }
 
 export function exportToSvg(svgString: string): Blob {
-  return new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+  return new Blob([withNaturalSize(svgString)], { type: 'image/svg+xml;charset=utf-8' });
 }
 
 export function downloadBlob(blob: Blob, filename: string): void {

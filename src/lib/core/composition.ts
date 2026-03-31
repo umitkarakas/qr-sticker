@@ -19,7 +19,7 @@ export function composeStickerSvg(input: CompositionInput): string {
   const parts: string[] = [];
 
   parts.push(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${shape.viewBox}">`
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${shape.viewBox}" width="100%" height="100%">`
   );
 
   parts.push(

@@ -29,7 +29,7 @@ export function composeFrameSvg(input: FrameCompositionInput): string {
 
   const parts: string[] = [];
 
-  parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${frame.viewBox}">`);
+  parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${frame.viewBox}" width="100%" height="100%">`);
 
   parts.push(`<defs><clipPath id="frame-clip"><path d="${frame.clipPath}"/></clipPath></defs>`);
 
