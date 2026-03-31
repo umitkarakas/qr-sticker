@@ -2,7 +2,7 @@ import type { StickerShape } from '../types';
 
 export const starShape: StickerShape = {
   id: 'star',
-  name: 'Yildiz',
+  name: 'Yıldız',
   category: 'figurative',
   viewBox: '0 0 200 230',
   clipPath:

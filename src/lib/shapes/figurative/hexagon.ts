@@ -2,7 +2,7 @@ import type { StickerShape } from '../types';
 
 export const hexagonShape: StickerShape = {
   id: 'hexagon',
-  name: 'Altigen',
+  name: 'Altıgen',
   category: 'figurative',
   viewBox: '0 0 200 230',
   clipPath:

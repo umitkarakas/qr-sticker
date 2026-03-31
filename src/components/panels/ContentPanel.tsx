@@ -207,18 +207,6 @@ export function ContentPanel() {
           </>
         )}
 
-        {(currentType === 'url' || currentType === 'google-review' || currentType === 'menu' || currentType === 'location') && currentType !== 'url' && (
-          <Field label="URL">
-            <input
-              type="url"
-              value={(state.content as { url: string }).url}
-              onChange={(e) => updateContent({ url: e.target.value })}
-              placeholder="https://"
-              className="input"
-            />
-          </Field>
-        )}
-
         {currentType === 'google-review' && (
           <Field label="Google Yorum Linki">
             <input

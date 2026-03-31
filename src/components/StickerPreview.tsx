@@ -82,14 +82,16 @@ export function StickerPreview() {
     };
   }, [buildPreview]);
 
+  const exportBaseName = state.content.type.replace('google-review', 'google-yorum') + '-qr';
+
   const handleDownloadPng = async () => {
     if (!svgString) return;
-    await downloadPng(svgString, 'sticker.png', 800, 800, 3);
+    await downloadPng(svgString, `${exportBaseName}.png`, 800, 800, 3);
   };
 
   const handleDownloadSvg = () => {
     if (!svgString) return;
-    downloadSvg(svgString, 'sticker.svg');
+    downloadSvg(svgString, `${exportBaseName}.svg`);
   };
 
   return (

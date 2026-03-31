@@ -2,7 +2,7 @@ import type { StickerShape } from '../types';
 
 export const speechBubbleShape: StickerShape = {
   id: 'speech-bubble',
-  name: 'Konusma Balonu',
+  name: 'Konuşma Balonu',
   category: 'figurative',
   viewBox: '0 0 200 230',
   clipPath:

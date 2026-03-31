@@ -2,7 +2,7 @@ import type { StickerShape } from '../types';
 
 export const roundedRectShape: StickerShape = {
   id: 'rounded-rect',
-  name: 'Yuvarlatilmis Dikdortgen',
+  name: 'Yuvarlatılmış Dikdörtgen',
   category: 'geometric',
   viewBox: '0 0 200 240',
   clipPath:
