@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'ls /usr/local/lsws/conf/vhosts/001.qrbir.com/ 2>/dev/null && echo \"\"EXISTS\"\" || echo \"\"NOT_EXISTS\"\"')",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'python3 /usr/local/CyberCP/plogical/httpProc.py createSubdomain qrbir.com 001 /home/qrbir.com/public_html/001.qrbir.com 2>&1 || echo \"\"FALLBACK_NEEDED\"\"')",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 ':*)",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'certbot certonly --webroot -w /usr/local/lsws/Example/html -d 001.qrbir.com --non-interactive --agree-tos -m admin@qrbir.com 2>&1')",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'which certbot || ls /usr/local/lsws/letsencrypt/ 2>/dev/null || ls /root/.acme.sh/ 2>/dev/null | head -5')",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'dig +short 001.qrbir.com @8.8.8.8')",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'dig +short 001.qrbir.com @1.1.1.1 && dig +short 001.qrbir.com @8.8.8.8')",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'dig +short 001.qrbir.com @1.1.1.1')",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'dig 001.qrbir.com @kim.ns.cloudflare.com +short')",
+      "Bash(ssh -i ~/.ssh/id_ed25519 -o ConnectTimeout=15 -o StrictHostKeyChecking=no root@46.224.198.172 'curl -sk -o /dev/null -w \"\"HTTP %{http_code}\"\" https://001.qrbir.com')",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-turbopack)",
+      "Bash(/usr/local/bin/npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-turbopack)",
+      "Read(//usr/local/bin/**)",
+      "Read(//Users/umitkarakas/.nvm/versions/**)",
+      "Bash(export PATH=\"/usr/local/bin:$PATH\")",
+      "Bash(npx --version)",
+      "Bash(mv /Users/umitkarakas/Yandex.Disk.localized/Develop/retoran_qr/KebapçıMustafa-QR.svg /tmp/KebapciMustafa-QR.svg)",
+      "Bash(npx create-next-app@15 . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-turbopack)",
+      "Bash(mv /Users/umitkarakas/Yandex.Disk.localized/Develop/retoran_qr/.claude /tmp/retoran_qr_claude_bak)"
+    ]
+  }
+}
