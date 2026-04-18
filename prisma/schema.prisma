@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum QrCodeStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum QrCodeType {
+  URL
+  TEXT
+  PHONE
+  EMAIL
+  WHATSAPP
+  WIFI
+  VCARD
+  MAP
+  PDF
+  IMAGE
+}
+
+enum AssetKind {
+  PDF
+  IMAGE
+  AUDIO
+  VIDEO
+}
+
+enum QrScanDeviceType {
+  DESKTOP
+  MOBILE
+  TABLET
+  BOT
+  UNKNOWN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  role          UserRole  @default(USER)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  qrCodes       QrCode[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @id
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model QrCode {
+  id         String         @id @default(cuid())
+  userId     String
+  type       QrCodeType
+  title      String
+  status     QrCodeStatus   @default(DRAFT)
+  isDynamic  Boolean        @default(false)
+  slug       String?        @unique
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content    QrContent?
+  design     QrDesign?
+  assets     QrAsset[]
+  scans      QrScan[]
+
+  @@index([userId, status])
+  @@index([type])
+}
+
+model QrContent {
+  id               String   @id @default(cuid())
+  qrCodeId         String   @unique
+  payload          Json
+  normalizedTarget String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  qrCode           QrCode   @relation(fields: [qrCodeId], references: [id], onDelete: Cascade)
+}
+
+model QrDesign {
+  id        String   @id @default(cuid())
+  qrCodeId  String   @unique
+  shapeId   String?
+  frameId   String?
+  style     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  qrCode    QrCode   @relation(fields: [qrCodeId], references: [id], onDelete: Cascade)
+}
+
+model QrAsset {
+  id           String    @id @default(cuid())
+  qrCodeId     String
+  kind         AssetKind
+  storagePath  String
+  originalName String
+  mimeType     String
+  sizeBytes    Int
+  createdAt    DateTime  @default(now())
+  qrCode       QrCode    @relation(fields: [qrCodeId], references: [id], onDelete: Cascade)
+
+  @@index([qrCodeId, kind])
+}
+
+model QrScan {
+  id         String           @id @default(cuid())
+  qrCodeId   String
+  scannedAt  DateTime         @default(now())
+  country    String?
+  city       String?
+  deviceType QrScanDeviceType @default(UNKNOWN)
+  referrer   String?
+  ipHash     String?
+  userAgent  String?
+  qrCode     QrCode           @relation(fields: [qrCodeId], references: [id], onDelete: Cascade)
+
+  @@index([qrCodeId, scannedAt])
+}

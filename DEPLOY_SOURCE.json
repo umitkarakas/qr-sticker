@@ -1,0 +1,11 @@
+{
+  "app": "qr-platform",
+  "live_checkout_path": "/opt/apps/qr-platform",
+  "repo_url": "https://github.com/umitkarakas/qr-sticker.git",
+  "repo_branch": "main",
+  "tracked_live_branch": "main",
+  "coolify_resource_name": "qr-platform",
+  "coolify_service_name": "qr-platform",
+  "updated_at": "2026-04-18",
+  "deployment_notes": "v1.qrbir.com icin Next.js + PostgreSQL QR platform iskeleti"
+}

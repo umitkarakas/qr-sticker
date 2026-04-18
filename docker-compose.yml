@@ -1,0 +1,27 @@
+name: qr-platform
+services:
+  qr-platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: qr-platform:latest
+    container_name: qr-platform
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3006:3000"
+    env_file:
+      - .env
+    volumes:
+      - /opt/qr-platform-data/uploads:/app/storage/uploads
+    networks:
+      - platform-db
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ > /dev/null && exit 0 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+networks:
+  platform-db:
+    external: true

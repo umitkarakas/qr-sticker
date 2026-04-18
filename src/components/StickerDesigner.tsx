@@ -1,16 +1,20 @@
+'use client';
+
 import { useState } from 'react';
 import { StickerPreview } from './StickerPreview';
 import { ContentPanel } from './panels/ContentPanel';
 import { QrStylePanel } from './panels/QrStylePanel';
 import { FramePanel } from './panels/FramePanel';
-import { Type, Palette, Shapes, RotateCcw } from 'lucide-react';
+import { ShapePanel } from './panels/ShapePanel';
+import { Type, Palette, Shapes, RotateCcw, Sparkles } from 'lucide-react';
 import { useDesigner } from '@/context/DesignerContext';
 
-type Tab = 'content' | 'style' | 'frame';
+type Tab = 'content' | 'style' | 'shape' | 'frame';
 
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'content', label: 'İçerik', icon: <Type size={16} /> },
   { id: 'style', label: 'Stil', icon: <Palette size={16} /> },
+  { id: 'shape', label: 'Şekil', icon: <Sparkles size={16} /> },
   { id: 'frame', label: 'Çerçeve', icon: <Shapes size={16} /> },
 ];
 
@@ -57,6 +61,7 @@ export function StickerDesigner() {
           <div className="flex-1 overflow-y-auto p-5">
             {activeTab === 'content' && <ContentPanel />}
             {activeTab === 'style' && <QrStylePanel />}
+            {activeTab === 'shape' && <ShapePanel />}
             {activeTab === 'frame' && <FramePanel />}
           </div>
         </div>

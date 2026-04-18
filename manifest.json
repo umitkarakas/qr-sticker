@@ -1,0 +1,16 @@
+{
+  "app": "qr-platform",
+  "domain": "v1.qrbir.com",
+  "master_domain": "qrbir.com",
+  "port": 3006,
+  "bind": "127.0.0.1:3006",
+  "runtime": "node:20-alpine",
+  "framework": "Next.js 15 (App Router, standalone)",
+  "db": "shared-postgres",
+  "db_contract": "postgresql",
+  "repo": "https://github.com/umitkarakas/qr-sticker.git",
+  "path": "/opt/apps/qr-platform",
+  "compliance": "standard-compliant",
+  "created_at": "2026-04-18T00:00:00Z",
+  "healthcheck": "http://127.0.0.1:3006/"
+}

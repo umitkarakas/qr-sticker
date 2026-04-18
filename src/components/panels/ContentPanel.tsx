@@ -1,5 +1,5 @@
 import { useDesigner } from '@/context/DesignerContext';
-import { CONTENT_TYPES } from '@/lib/core/content-types';
+import { CONTENT_TYPES, getDefaultContent } from '@/lib/core/content-types';
 import type { ContentData, ContentType } from '@/lib/core/schemas';
 import {
   Globe, Instagram, MessageCircle, Wifi, UserPlus,
@@ -18,21 +18,6 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Mail: <Mail size={16} />,
   MapPin: <MapPin size={16} />,
 };
-
-function getDefaultContent(type: ContentType): ContentData {
-  switch (type) {
-    case 'url': return { type: 'url', url: 'https://' };
-    case 'instagram': return { type: 'instagram', username: '' };
-    case 'whatsapp': return { type: 'whatsapp', phone: '' };
-    case 'wifi': return { type: 'wifi', ssid: '', password: '', encryption: 'WPA' };
-    case 'vcard': return { type: 'vcard', firstName: '', lastName: '' };
-    case 'google-review': return { type: 'google-review', url: 'https://' };
-    case 'menu': return { type: 'menu', url: 'https://' };
-    case 'phone': return { type: 'phone', phone: '' };
-    case 'email': return { type: 'email', email: '' };
-    case 'location': return { type: 'location', url: 'https://maps.google.com' };
-  }
-}
 
 export function ContentPanel() {
   const { state, dispatch } = useDesigner();

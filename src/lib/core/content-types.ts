@@ -1,4 +1,6 @@
 import type { ContentData, ContentType } from './schemas';
+import type { DesignerState } from './schemas';
+import { DEFAULT_DESIGNER_STATE } from './schemas';
 
 export interface ContentTypeConfig {
   type: ContentType;
@@ -52,6 +54,21 @@ function formatQrData(data: ContentData): string {
     case 'phone': return `tel:${data.phone}`;
     case 'email': return formatEmail(data);
     case 'location': return data.url;
+  }
+}
+
+export function getDefaultContent(type: ContentType): ContentData {
+  switch (type) {
+    case 'url': return { type: 'url', url: 'https://' };
+    case 'instagram': return { type: 'instagram', username: '' };
+    case 'whatsapp': return { type: 'whatsapp', phone: '' };
+    case 'wifi': return { type: 'wifi', ssid: '', password: '', encryption: 'WPA' };
+    case 'vcard': return { type: 'vcard', firstName: '', lastName: '' };
+    case 'google-review': return { type: 'google-review', url: 'https://' };
+    case 'menu': return { type: 'menu', url: 'https://' };
+    case 'phone': return { type: 'phone', phone: '' };
+    case 'email': return { type: 'email', email: '' };
+    case 'location': return { type: 'location', url: 'https://maps.google.com' };
   }
 }
 
@@ -134,4 +151,15 @@ export function getContentTypeConfig(type: ContentType): ContentTypeConfig {
 
 export function getQrDataString(data: ContentData): string {
   return formatQrData(data);
+}
+
+export function getDefaultContentTypeState(type: ContentType): DesignerState {
+  return {
+    ...DEFAULT_DESIGNER_STATE,
+    content: getDefaultContent(type),
+    cta: {
+      ...DEFAULT_DESIGNER_STATE.cta,
+      text: CONTENT_TYPES[type].defaultCta,
+    },
+  };
 }

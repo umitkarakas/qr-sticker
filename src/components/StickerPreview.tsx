@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useDesigner } from '@/context/DesignerContext';
 import { generateQrSvg } from '@/lib/core/qr-engine';

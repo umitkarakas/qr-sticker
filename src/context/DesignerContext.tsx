@@ -1,6 +1,9 @@
+'use client';
+
 import React, { createContext, useContext, useReducer, type Dispatch } from 'react';
-import type { DesignerState, ContentData, QrStyle, CtaConfig } from '@/lib/core/schemas';
+import type { DesignerState, ContentData, QrStyle, CtaConfig, ContentType } from '@/lib/core/schemas';
 import { DEFAULT_DESIGNER_STATE } from '@/lib/core/schemas';
+import { getDefaultContentTypeState } from '@/lib/core/content-types';
 
 // ─── Actions ───
 
@@ -58,8 +61,15 @@ interface DesignerContextValue {
 
 const DesignerContext = createContext<DesignerContextValue | null>(null);
 
-export function DesignerProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(designerReducer, DEFAULT_DESIGNER_STATE);
+interface DesignerProviderProps {
+  children: React.ReactNode;
+  initialContentType?: ContentType;
+}
+
+export function DesignerProvider({ children, initialContentType }: DesignerProviderProps) {
+  const initialState =
+    initialContentType ? getDefaultContentTypeState(initialContentType) : DEFAULT_DESIGNER_STATE;
+  const [state, dispatch] = useReducer(designerReducer, initialState);
   return (
     <DesignerContext.Provider value={{ state, dispatch }}>
       {children}
