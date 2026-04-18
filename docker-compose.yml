@@ -11,12 +11,14 @@ services:
       - "127.0.0.1:3006:3000"
     env_file:
       - .env
+    environment:
+      - HOSTNAME=0.0.0.0
     volumes:
       - /opt/qr-platform-data/uploads:/app/storage/uploads
     networks:
       - platform-db
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ > /dev/null && exit 0 || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://0.0.0.0:3000/ > /dev/null && exit 0 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
