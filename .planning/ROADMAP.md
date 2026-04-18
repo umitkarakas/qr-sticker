@@ -28,7 +28,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Selecting "Phone", "Email", "WhatsApp", "WiFi", "vCard", or "Map" each shows its own distinct form with the correct fields for that type
   3. Typing or changing any field value updates the QR preview in real time without requiring a button press
   4. A form with empty required fields shows an empty or placeholder QR rather than crashing
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Schema extensions + 7 type-specific form components
+- [ ] 01-02-PLAN.md — ContentPanel refactor to use form components + human verify
 
 ### Phase 2: Save Flow
 **Goal**: A logged-in user can save the current QR design to their account with a name; an unauthenticated user is prompted to log in
@@ -68,7 +72,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Type Forms | 0/TBD | Not started | - |
+| 1. Type Forms | 0/2 | Not started | - |
 | 2. Save Flow | 0/TBD | Not started | - |
 | 3. Dashboard CRUD | 0/TBD | Not started | - |
 | 4. Dashboard Download | 0/TBD | Not started | - |
