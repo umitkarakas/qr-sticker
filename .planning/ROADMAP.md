@@ -13,7 +13,7 @@ Milestone v1.0 closes the gap between a working QR designer and a useful product
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Type Forms** - Replace generic text input with type-specific content forms for all 7 QR types
-- [ ] **Phase 2: Save Flow** - Add save button + API to persist QrCode + QrContent + QrDesign to the database
+- [x] **Phase 2: Save Flow** - Add save button + API to persist QrCode + QrContent + QrDesign to the database (completed 2026-04-19)
 - [ ] **Phase 3: Dashboard CRUD** - Build real dashboard with list, edit, delete, and duplicate actions
 - [ ] **Phase 4: Dashboard Download** - Enable PNG and SVG download directly from the dashboard
 
@@ -77,6 +77,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Type Forms | 2/2 | Complete    | 2026-04-19 |
-| 2. Save Flow | 1/2 | In Progress|  |
+| 2. Save Flow | 2/2 | Complete   | 2026-04-19 |
 | 3. Dashboard CRUD | 0/TBD | Not started | - |
 | 4. Dashboard Download | 0/TBD | Not started | - |
