@@ -1,13 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { StickerPreview } from './StickerPreview';
 import { ContentPanel } from './panels/ContentPanel';
 import { QrStylePanel } from './panels/QrStylePanel';
 import { FramePanel } from './panels/FramePanel';
 import { ShapePanel } from './panels/ShapePanel';
-import { Type, Palette, Shapes, RotateCcw, Sparkles } from 'lucide-react';
+import { Type, Palette, Shapes, RotateCcw, Sparkles, Save } from 'lucide-react';
 import { useDesigner } from '@/context/DesignerContext';
+import { SaveQrModal } from './SaveQrModal';
 
 type Tab = 'content' | 'style' | 'shape' | 'frame';
 
@@ -20,7 +23,58 @@ const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
 
 export function StickerDesigner() {
   const [activeTab, setActiveTab] = useState<Tab>('content');
-  const { dispatch } = useDesigner();
+  const router = useRouter();
+  const { status } = useSession();
+  const { state, dispatch } = useDesigner();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  const handleSaveClick = () => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+      return;
+    }
+    setSaveError(null);
+    setIsModalOpen(true);
+  };
+
+  const handleSave = async (name: string) => {
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      const body = {
+        name,
+        contentType: state.content.type,
+        content: state.content,
+        qrStyle: state.qrStyle,
+        shapeId: state.shapeId,
+        frameId: state.frameId,
+        ctaBandColor: state.ctaBandColor,
+        decorativeColor: state.decorativeColor,
+        backgroundColor: state.backgroundColor,
+        borderColor: state.borderColor,
+        borderWidth: state.borderWidth,
+        cta: state.cta,
+      };
+      const res = await fetch('/api/qr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setSaveError(data?.error ?? 'Kaydetme başarısız oldu. Lütfen tekrar deneyin.');
+        return;
+      }
+      setIsModalOpen(false);
+      router.push('/dashboard');
+    } catch {
+      setSaveError('Bağlantı hatası. Lütfen tekrar deneyin.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -30,13 +84,24 @@ export function StickerDesigner() {
           {/* Header */}
           <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
             <h1 className="text-base font-bold text-gray-800">QR Sticker Designer</h1>
-            <button
-              onClick={() => dispatch({ type: 'RESET' })}
-              title="Sıfırla"
-              className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <RotateCcw size={15} />
-            </button>
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => dispatch({ type: 'RESET' })}
+                title="Sıfırla"
+                className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <RotateCcw size={15} />
+              </button>
+              <button
+                onClick={handleSaveClick}
+                disabled={status === 'loading'}
+                title="Kaydet"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
+              >
+                <Save size={13} />
+                Kaydet
+              </button>
+            </div>
           </div>
 
           {/* Tab bar */}
@@ -71,6 +136,14 @@ export function StickerDesigner() {
           <StickerPreview />
         </div>
       </div>
+
+      <SaveQrModal
+        isOpen={isModalOpen}
+        onClose={() => { setIsModalOpen(false); setSaveError(null); }}
+        onSave={handleSave}
+        isSaving={isSaving}
+        error={saveError}
+      />
     </div>
   );
 }
