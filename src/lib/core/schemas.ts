@@ -10,7 +10,7 @@ export type ContentType = z.infer<typeof ContentTypeEnum>;
 
 // Discriminated union for content data - each type has its own fields
 export const ContentDataSchema = z.discriminatedUnion('type', [
-  z.object({ type: z.literal('url'), url: z.string().url() }),
+  z.object({ type: z.literal('url'), url: z.string().url(), title: z.string().optional() }),
   z.object({ type: z.literal('instagram'), username: z.string().min(1) }),
   z.object({ type: z.literal('whatsapp'), phone: z.string().min(1), message: z.string().optional() }),
   z.object({
@@ -27,6 +27,7 @@ export const ContentDataSchema = z.discriminatedUnion('type', [
     email: z.string().email().optional(),
     org: z.string().optional(),
     title: z.string().optional(),
+    website: z.string().optional(),
   }),
   z.object({ type: z.literal('google-review'), url: z.string().url() }),
   z.object({ type: z.literal('menu'), url: z.string().url() }),

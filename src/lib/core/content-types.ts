@@ -26,6 +26,7 @@ function formatVcard(data: Extract<ContentData, { type: 'vcard' }>): string {
   if (data.email) lines.push(`EMAIL:${data.email}`);
   if (data.org) lines.push(`ORG:${data.org}`);
   if (data.title) lines.push(`TITLE:${data.title}`);
+  if (data.website) lines.push(`URL:${data.website}`);
   lines.push('END:VCARD');
   return lines.join('\n');
 }
