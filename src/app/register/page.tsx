@@ -1,5 +1,7 @@
 import { RegisterForm } from '@/components/auth/RegisterForm';
 
+export const dynamic = 'force-dynamic';
+
 export default function RegisterPage() {
   return (
     <main className="mx-auto flex max-w-7xl px-6 py-16">
