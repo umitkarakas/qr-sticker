@@ -18,10 +18,10 @@
 
 ### SAVE — Persist QR to Database
 
-- [ ] **SAVE-01**: Logged-in user can save the current QR design with a custom name
-- [ ] **SAVE-02**: Saving creates QrCode + QrContent + QrDesign records linked to the user
+- [x] **SAVE-01**: Logged-in user can save the current QR design with a custom name
+- [x] **SAVE-02**: Saving creates QrCode + QrContent + QrDesign records linked to the user
 - [ ] **SAVE-03**: User is redirected to the dashboard after a successful save
-- [ ] **SAVE-04**: Unauthenticated user is prompted to log in before saving
+- [x] **SAVE-04**: Unauthenticated user is prompted to log in before saving
 
 ### DASH — Dashboard List & CRUD
 
@@ -74,10 +74,10 @@
 | FORM-06 | Phase 1 | Complete |
 | FORM-07 | Phase 1 | Complete |
 | FORM-08 | Phase 1 | Complete |
-| SAVE-01 | Phase 2 | Pending |
-| SAVE-02 | Phase 2 | Pending |
+| SAVE-01 | Phase 2 | Complete |
+| SAVE-02 | Phase 2 | Complete |
 | SAVE-03 | Phase 2 | Pending |
-| SAVE-04 | Phase 2 | Pending |
+| SAVE-04 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
