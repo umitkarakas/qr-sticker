@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import '@/index.css';
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: 'QR Platform',
@@ -37,7 +38,7 @@ export default function RootLayout({
               </nav>
             </div>
           </header>
-          {children}
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>
