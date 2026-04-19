@@ -7,14 +7,14 @@
 
 ### FORM — Type-specific Content Forms
 
-- [ ] **FORM-01**: User sees a URL input form (url + optional title) for URL QR type
-- [ ] **FORM-02**: User sees a phone number input for Phone QR type
-- [ ] **FORM-03**: User sees email + optional subject/body fields for Email QR type
-- [ ] **FORM-04**: User sees phone + optional message fields for WhatsApp QR type
-- [ ] **FORM-05**: User sees SSID, password, and security type fields for WiFi QR type
-- [ ] **FORM-06**: User sees name, phone, email, website, organization fields for vCard QR type
-- [ ] **FORM-07**: User sees address/coordinates field for Map QR type
-- [ ] **FORM-08**: QR preview updates in real-time as user types in any form field
+- [x] **FORM-01**: User sees a URL input form (url + optional title) for URL QR type
+- [x] **FORM-02**: User sees a phone number input for Phone QR type
+- [x] **FORM-03**: User sees email + optional subject/body fields for Email QR type
+- [x] **FORM-04**: User sees phone + optional message fields for WhatsApp QR type
+- [x] **FORM-05**: User sees SSID, password, and security type fields for WiFi QR type
+- [x] **FORM-06**: User sees name, phone, email, website, organization fields for vCard QR type
+- [x] **FORM-07**: User sees address/coordinates field for Map QR type
+- [x] **FORM-08**: QR preview updates in real-time as user types in any form field
 
 ### SAVE — Persist QR to Database
 
@@ -66,14 +66,14 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FORM-01 | Phase 1 | Pending |
-| FORM-02 | Phase 1 | Pending |
-| FORM-03 | Phase 1 | Pending |
-| FORM-04 | Phase 1 | Pending |
-| FORM-05 | Phase 1 | Pending |
-| FORM-06 | Phase 1 | Pending |
-| FORM-07 | Phase 1 | Pending |
-| FORM-08 | Phase 1 | Pending |
+| FORM-01 | Phase 1 | Complete |
+| FORM-02 | Phase 1 | Complete |
+| FORM-03 | Phase 1 | Complete |
+| FORM-04 | Phase 1 | Complete |
+| FORM-05 | Phase 1 | Complete |
+| FORM-06 | Phase 1 | Complete |
+| FORM-07 | Phase 1 | Complete |
+| FORM-08 | Phase 1 | Complete |
 | SAVE-01 | Phase 2 | Pending |
 | SAVE-02 | Phase 2 | Pending |
 | SAVE-03 | Phase 2 | Pending |
