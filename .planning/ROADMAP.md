@@ -43,7 +43,11 @@ Plans:
   2. After a successful save, the user lands on the dashboard (redirect)
   3. A user who is not logged in and attempts to save is redirected to the login page or sees a login prompt
   4. Saving the same QR twice creates two separate records (no silent deduplication)
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Slug utility + POST /api/qr route (auth gate, Zod validation, Prisma transaction)
+- [ ] 02-02-PLAN.md — SaveQrModal component + Kaydet button wired into StickerDesigner
 
 ### Phase 3: Dashboard CRUD
 **Goal**: The dashboard shows the user's saved QR codes and lets them edit, delete, or duplicate any entry
@@ -73,6 +77,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Type Forms | 2/2 | Complete    | 2026-04-19 |
-| 2. Save Flow | 0/TBD | Not started | - |
+| 2. Save Flow | 0/2 | Planned | - |
 | 3. Dashboard CRUD | 0/TBD | Not started | - |
 | 4. Dashboard Download | 0/TBD | Not started | - |
