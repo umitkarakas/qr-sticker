@@ -1,8 +1,11 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/options';
+import { prisma } from '@/lib/db/prisma';
 import { LogoutButton } from '@/components/auth/LogoutButton';
+import { QrGrid } from '@/components/dashboard/QrGrid';
+import type { QrCardData } from '@/components/dashboard/QrCard';
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -10,42 +13,53 @@ export default async function DashboardPage() {
     redirect('/login');
   }
 
+  const qrCodes = await prisma.qrCode.findMany({
+    where: { userId: session.user.id },
+    include: { content: true, design: true },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  const serialized: QrCardData[] = qrCodes.map((qr) => ({
+    id: qr.id,
+    type: qr.type,
+    title: qr.title,
+    createdAt: qr.createdAt.toISOString(),
+    content: qr.content ? { payload: qr.content.payload } : null,
+    design: qr.design
+      ? {
+          shapeId: qr.design.shapeId,
+          frameId: qr.design.frameId,
+          style: qr.design.style as Record<string, unknown>,
+        }
+      : null,
+  }));
+
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
       <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-        <div className="flex flex-wrap items-start justify-between gap-6">
+        {/* Header */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-fuchsia-600">
               Dashboard
             </p>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900">
-              Hos geldin, {session.user.name ?? session.user.email}
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
+              QR Kodlarım
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
-              Auth katmani artik aktif. Siradaki adimda bu yuzeye kayitli QR listesi,
-              filtreleme ve duzenleme akisi eklenecek.
-            </p>
           </div>
-
-          <LogoutButton />
-        </div>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <div className="rounded-2xl bg-slate-50 p-5">
-            <p className="text-sm font-medium text-slate-500">Kullanici ID</p>
-            <p className="mt-2 break-all text-sm text-slate-800">{session.user.id}</p>
-          </div>
-          <div className="rounded-2xl bg-slate-50 p-5">
-            <p className="text-sm font-medium text-slate-500">Rol</p>
-            <p className="mt-2 text-sm text-slate-800">{session.user.role ?? 'USER'}</p>
-          </div>
-          <div className="rounded-2xl bg-slate-50 p-5">
-            <p className="text-sm font-medium text-slate-500">Sonraki Adim</p>
-            <Link href="/qr-code-generator" className="mt-2 inline-block text-sm font-semibold text-fuchsia-600">
-              Ilk QR’i olustur
+          <div className="flex items-center gap-3">
+            <Link
+              href="/qr-code-generator"
+              className="rounded-xl bg-fuchsia-600 px-4 py-2 text-sm font-semibold text-white hover:bg-fuchsia-700 transition-colors"
+            >
+              + Yeni QR Oluştur
             </Link>
+            <LogoutButton />
           </div>
         </div>
+
+        {/* Grid */}
+        <QrGrid initialQrCodes={serialized} />
       </div>
     </main>
   );
