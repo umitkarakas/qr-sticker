@@ -16,6 +16,7 @@ type Tab = 'content' | 'style' | 'shape' | 'frame';
 
 interface StickerDesignerProps {
   editId?: string;
+  editTitle?: string;
 }
 
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
@@ -25,7 +26,7 @@ const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'frame', label: 'Çerçeve', icon: <Shapes size={16} /> },
 ];
 
-export function StickerDesigner({ editId }: StickerDesignerProps) {
+export function StickerDesigner({ editId, editTitle }: StickerDesignerProps) {
   const [activeTab, setActiveTab] = useState<Tab>('content');
   const router = useRouter();
   const { status } = useSession();
@@ -40,6 +41,11 @@ export function StickerDesigner({ editId }: StickerDesignerProps) {
       return;
     }
     setSaveError(null);
+    // Edit mode: skip the name modal, save directly with the existing title
+    if (editId && editTitle) {
+      void handleSave(editTitle);
+      return;
+    }
     setIsModalOpen(true);
   };
 

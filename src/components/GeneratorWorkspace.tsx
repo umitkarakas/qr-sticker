@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DesignerProvider, useDesigner } from '@/context/DesignerContext';
 import { StickerDesigner } from '@/components/StickerDesigner';
 import type { ContentType, DesignerState } from '@/lib/core/schemas';
@@ -11,7 +11,13 @@ interface GeneratorWorkspaceProps {
 }
 
 // Fetches QR data and dispatches LOAD_QR — must run inside DesignerProvider
-function EditLoader({ editId }: { editId: string }) {
+function EditLoader({
+  editId,
+  onTitleLoaded,
+}: {
+  editId: string;
+  onTitleLoaded: (title: string) => void;
+}) {
   const { dispatch } = useDesigner();
 
   useEffect(() => {
@@ -38,18 +44,22 @@ function EditLoader({ editId }: { editId: string }) {
       };
 
       dispatch({ type: 'LOAD_QR', payload: state });
+      onTitleLoaded(qrCode.title ?? '');
     }
     loadQr();
-  }, [editId, dispatch]);
+  }, [editId, dispatch, onTitleLoaded]);
 
   return null;
 }
 
 export function GeneratorWorkspace({ initialContentType, editId }: GeneratorWorkspaceProps) {
+  const [editTitle, setEditTitle] = useState('');
+  const handleTitleLoaded = useCallback((title: string) => setEditTitle(title), []);
+
   return (
     <DesignerProvider initialContentType={initialContentType}>
-      {editId && <EditLoader editId={editId} />}
-      <StickerDesigner editId={editId} />
+      {editId && <EditLoader editId={editId} onTitleLoaded={handleTitleLoaded} />}
+      <StickerDesigner editId={editId} editTitle={editTitle} />
     </DesignerProvider>
   );
 }
