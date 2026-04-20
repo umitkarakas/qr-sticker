@@ -58,7 +58,12 @@ Plans:
   2. Clicking "Edit" on a saved QR opens the designer pre-loaded with that QR's content and design settings
   3. Clicking "Delete" shows a confirmation prompt; confirming removes the entry from the list and the database
   4. Clicking "Duplicate" creates a new entry with "(copy)" appended to the name and adds it to the list immediately
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — API routes: GET /api/qr, DELETE /api/qr/[id], PUT /api/qr/[id], POST /api/qr/[id]/duplicate
+- [ ] 03-02-PLAN.md — DesignerContext LOAD_QR action + edit mode in designer page
+- [ ] 03-03-PLAN.md — Dashboard page, QrCard, QrGrid, DeleteConfirmModal components
 
 ### Phase 4: Dashboard Download
 **Goal**: Users can download any saved QR as PNG or SVG directly from the dashboard without opening the editor
