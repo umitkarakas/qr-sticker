@@ -5,10 +5,13 @@ import { getQrTypeDefinition } from '@/lib/qr-types/registry';
 
 export default async function QrTypePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ type: string }>;
+  searchParams: Promise<{ edit?: string }>;
 }) {
   const { type } = await params;
+  const { edit: editId } = await searchParams;
   const definition = getQrTypeDefinition(type);
 
   if (!definition) {
@@ -35,7 +38,7 @@ export default async function QrTypePage({
       </div>
 
       {definition.contentType ? (
-        <GeneratorWorkspace initialContentType={definition.contentType} />
+        <GeneratorWorkspace initialContentType={definition.contentType} editId={editId} />
       ) : (
         <section className="rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center">
           <h2 className="text-xl font-semibold text-slate-900">Bu tip hazirlaniyor</h2>

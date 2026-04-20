@@ -14,6 +14,10 @@ import { SaveQrModal } from './SaveQrModal';
 
 type Tab = 'content' | 'style' | 'shape' | 'frame';
 
+interface StickerDesignerProps {
+  editId?: string;
+}
+
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'content', label: 'İçerik', icon: <Type size={16} /> },
   { id: 'style', label: 'Stil', icon: <Palette size={16} /> },
@@ -21,7 +25,7 @@ const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'frame', label: 'Çerçeve', icon: <Shapes size={16} /> },
 ];
 
-export function StickerDesigner() {
+export function StickerDesigner({ editId }: StickerDesignerProps) {
   const [activeTab, setActiveTab] = useState<Tab>('content');
   const router = useRouter();
   const { status } = useSession();
@@ -57,8 +61,11 @@ export function StickerDesigner() {
         borderWidth: state.borderWidth,
         cta: state.cta,
       };
-      const res = await fetch('/api/qr', {
-        method: 'POST',
+      const url = editId ? `/api/qr/${editId}` : '/api/qr';
+      const method = editId ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
