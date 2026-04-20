@@ -19,7 +19,8 @@ type DesignerAction =
   | { type: 'SET_BORDER_COLOR'; payload: string }
   | { type: 'SET_BORDER_WIDTH'; payload: number }
   | { type: 'SET_CTA'; payload: Partial<CtaConfig> }
-  | { type: 'RESET' };
+  | { type: 'RESET' }
+  | { type: 'LOAD_QR'; payload: DesignerState };
 
 function designerReducer(state: DesignerState, action: DesignerAction): DesignerState {
   switch (action.type) {
@@ -47,6 +48,8 @@ function designerReducer(state: DesignerState, action: DesignerAction): Designer
       return { ...state, cta: { ...state.cta, ...action.payload } };
     case 'RESET':
       return DEFAULT_DESIGNER_STATE;
+    case 'LOAD_QR':
+      return action.payload;
     default:
       return state;
   }
