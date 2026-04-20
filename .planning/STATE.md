@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 02-save-flow-02-02-PLAN.md
-last_updated: "2026-04-19T19:46:43.844Z"
+stopped_at: Completed 03-dashboard-crud-03-01-PLAN.md
+last_updated: "2026-04-20T19:35:04.084Z"
 last_activity: 2026-04-19 — POST /api/qr endpoint created with auth gate, Zod validation, and atomic Prisma nested create; SAVE-01, SAVE-02, SAVE-04 satisfied
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
+  total_plans: 7
+  completed_plans: 6
   percent: 25
 ---
 
@@ -55,6 +55,8 @@ Progress: [████████░░] 25% (Phase 2 in progress)
 | Phase 01-type-forms P02 | 2 | 2 tasks | 1 file |
 | Phase 02-save-flow P01  | 3 | 2 tasks | 4 files |
 | Phase 02-save-flow P02 | 4 | 2 tasks | 2 files |
+| Phase 03-dashboard-crud P02 | 5 | 2 tasks | 4 files |
+| Phase 03-dashboard-crud P01 | 5 | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -74,6 +76,10 @@ Recent decisions affecting current work:
 - [Phase 02-01]: vitest.config.ts created standalone (separate from vite.config.ts) to decouple test runner from app bundler missing @vitejs/plugin-react
 - [Phase 02-02]: SaveQrModal is pure UI — no useSession/useDesigner inside; parent owns data and callbacks
 - [Phase 02-02]: session.data not destructured in StickerDesigner — only status needed for auth guard; API enforces auth server-side
+- [Phase 03-dashboard-crud]: EditLoader is a separate inner component inside DesignerProvider — useDesigner() requires being inside the provider
+- [Phase 03-dashboard-crud]: LOAD_QR replaces entire DesignerState in one dispatch — atomic and simpler than dispatching individual field actions
+- [Phase 03-dashboard-crud]: GET /api/qr handler added alongside existing POST in same route.ts — resource verbs co-locate naturally
+- [Phase 03-dashboard-crud]: PUT /api/qr/[id] uses nested upsert (not conditional create/update) to handle QrCodes missing content or design rows
 
 ### Pending Todos
 
@@ -85,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-19T19:27:14.296Z
-Stopped at: Completed 02-save-flow-02-02-PLAN.md
+Last session: 2026-04-20T19:35:04.082Z
+Stopped at: Completed 03-dashboard-crud-03-01-PLAN.md
 Resume file: None

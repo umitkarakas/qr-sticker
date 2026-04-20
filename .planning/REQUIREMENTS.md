@@ -26,7 +26,7 @@
 ### DASH — Dashboard List & CRUD
 
 - [ ] **DASH-01**: User sees a list of their saved QR codes with preview thumbnail, name, type, and date
-- [ ] **DASH-02**: User can open a saved QR in the editor to modify it
+- [x] **DASH-02**: User can open a saved QR in the editor to modify it
 - [ ] **DASH-03**: User can delete a saved QR code (with confirmation)
 - [ ] **DASH-04**: User can duplicate a saved QR code (creates a copy)
 
@@ -79,7 +79,7 @@
 | SAVE-03 | Phase 2 | Complete |
 | SAVE-04 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
-| DASH-02 | Phase 3 | Pending |
+| DASH-02 | Phase 3 | Complete |
 | DASH-03 | Phase 3 | Pending |
 | DASH-04 | Phase 3 | Pending |
 | DOWN-01 | Phase 4 | Pending |
