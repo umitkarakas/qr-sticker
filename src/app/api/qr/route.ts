@@ -45,6 +45,23 @@ const CONTENT_TYPE_TO_QR_TYPE: Record<ContentType, QrCodeType> = {
   vcard: 'VCARD',
 };
 
+// ─── GET handler ──────────────────────────────────────────────────────────────
+
+export async function GET() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const qrCodes = await prisma.qrCode.findMany({
+    where: { userId: session.user.id },
+    include: { content: true, design: true },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return NextResponse.json(qrCodes, { status: 200 });
+}
+
 // ─── POST handler ─────────────────────────────────────────────────────────────
 
 export async function POST(request: Request) {
