@@ -2,9 +2,16 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Pencil, Copy, Trash2 } from 'lucide-react';
+import { Pencil, Copy, Trash2, ChevronDown } from 'lucide-react';
 import QRCodeStyling from 'qr-code-styling';
 import type { DotType, CornerSquareType, CornerDotType } from 'qr-code-styling';
+import { generateQrSvg } from '@/lib/core/qr-engine';
+import { composeStickerSvg } from '@/lib/core/composition';
+import { composeFrameSvg } from '@/lib/core/frame-composition';
+import { downloadPng, downloadSvg } from '@/lib/core/export';
+import { getShape } from '@/lib/shapes';
+import { getFrame } from '@/lib/frames';
+import type { QrStyle, CtaConfig } from '@/lib/core/schemas';
 
 // QrCodeType → URL path segment
 const QR_TYPE_TO_ROUTE_SEGMENT: Record<string, string> = {
@@ -41,6 +48,8 @@ export function QrCard({ qr, onDeleteRequest, onDuplicateRequest }: QrCardProps)
   const router = useRouter();
   const canvasRef = useRef<HTMLDivElement>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [downloadOpen, setDownloadOpen] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -94,12 +103,40 @@ export function QrCard({ qr, onDeleteRequest, onDuplicateRequest }: QrCardProps)
     router.push(`/qr-code-generator/${segment}?edit=${qr.id}`);
   };
 
+  const handleDownloadPng = async () => {
+    setDownloadOpen(false);
+    setDownloading(true);
+    try {
+      const svgString = await composeSvgFromCard(qr);
+      const filename = `${toSlug(qr.title) || 'qr'}.png`;
+      await downloadPng(svgString, filename, 800, 800, 3);
+    } catch (err) {
+      console.error('PNG download failed:', err);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const handleDownloadSvg = async () => {
+    setDownloadOpen(false);
+    setDownloading(true);
+    try {
+      const svgString = await composeSvgFromCard(qr);
+      const filename = `${toSlug(qr.title) || 'qr'}.svg`;
+      downloadSvg(svgString, filename);
+    } catch (err) {
+      console.error('SVG download failed:', err);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
   const formattedDate = new Date(qr.createdAt).toLocaleDateString('tr-TR', {
     day: 'numeric', month: 'short', year: 'numeric',
   });
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col">
+    <div className="rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col">
       {/* Thumbnail area */}
       <div className="flex items-center justify-center bg-slate-50 p-4 h-36 relative">
         <div ref={canvasRef} className="absolute opacity-0 pointer-events-none" aria-hidden="true" />
@@ -123,34 +160,127 @@ export function QrCard({ qr, onDeleteRequest, onDuplicateRequest }: QrCardProps)
       </div>
 
       {/* Action buttons */}
-      <div className="border-t border-slate-100 flex">
-        <button
-          onClick={handleEdit}
-          title="Düzenle"
-          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
-        >
-          <Pencil size={14} />
-          Düzenle
-        </button>
-        <button
-          onClick={() => onDuplicateRequest(qr.id)}
-          title="Kopyala"
-          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors border-x border-slate-100"
-        >
-          <Copy size={14} />
-          Kopyala
-        </button>
-        <button
-          onClick={() => onDeleteRequest(qr.id)}
-          title="Sil"
-          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors"
-        >
-          <Trash2 size={14} />
-          Sil
-        </button>
+      <div className="border-t border-slate-100 relative">
+        <div className="flex">
+          <button
+            onClick={handleEdit}
+            title="Düzenle"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+          >
+            <Pencil size={14} />
+            Düzenle
+          </button>
+          <button
+            onClick={() => onDuplicateRequest(qr.id)}
+            title="Kopyala"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors border-x border-slate-100"
+          >
+            <Copy size={14} />
+            Kopyala
+          </button>
+          <button
+            onClick={() => onDeleteRequest(qr.id)}
+            title="Sil"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors border-r border-slate-100"
+          >
+            <Trash2 size={14} />
+            Sil
+          </button>
+          <button
+            onClick={() => setDownloadOpen((v) => !v)}
+            disabled={downloading}
+            title="İndir"
+            className="flex-1 flex items-center justify-center gap-1 py-2.5 text-xs font-medium text-fuchsia-600 hover:bg-fuchsia-50 hover:text-fuchsia-700 disabled:opacity-50 transition-colors"
+          >
+            {downloading ? (
+              <span className="w-3.5 h-3.5 border border-fuchsia-400 border-t-fuchsia-700 rounded-full animate-spin" />
+            ) : (
+              <>
+                İndir
+                <ChevronDown size={12} />
+              </>
+            )}
+          </button>
+        </div>
+
+        {downloadOpen && (
+          <>
+            <div
+              className="fixed inset-0 z-10"
+              onClick={() => setDownloadOpen(false)}
+            />
+            <div className="absolute bottom-full left-0 right-0 z-20 bg-white border border-slate-200 rounded-t-xl shadow-lg overflow-hidden">
+              <button
+                onClick={handleDownloadPng}
+                className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-slate-700 hover:bg-fuchsia-50 hover:text-fuchsia-700 transition-colors"
+              >
+                PNG İndir
+              </button>
+              <div className="h-px bg-slate-100" />
+              <button
+                onClick={handleDownloadSvg}
+                className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-slate-700 hover:bg-fuchsia-50 hover:text-fuchsia-700 transition-colors"
+              >
+                SVG İndir
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
+}
+
+function toSlug(title: string): string {
+  return title.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\u00c0-\u024f-]/g, '');
+}
+
+async function composeSvgFromCard(qr: QrCardData): Promise<string> {
+  const payload = qr.content?.payload as Record<string, unknown> | undefined;
+  const design = qr.design ?? { shapeId: null, frameId: null, style: {} };
+  const style = (design.style ?? {}) as Record<string, unknown>;
+
+  const qrStyle = (style.qrStyle ?? {}) as QrStyle;
+  const shapeId = design.shapeId ?? 'rounded-rect';
+  const frameId = design.frameId ?? undefined;
+  const backgroundColor = (style.backgroundColor as string) ?? '#FFFFFF';
+  const borderColor = (style.borderColor as string) ?? '#000000';
+  const borderWidth = (style.borderWidth as number) ?? 0;
+  const cta = (style.cta ?? { text: '', fontSize: 14, fontWeight: 600, color: '#333333' }) as CtaConfig;
+  const ctaBandColor = (style.ctaBandColor as string | undefined) ?? undefined;
+  const decorativeColor = (style.decorativeColor as string | undefined) ?? undefined;
+
+  const qrData = deriveQrData(qr.type, payload);
+
+  if (frameId) {
+    const frame = getFrame(frameId);
+    const [, , vbW, vbH] = frame.viewBox.split(' ').map(Number);
+    const qrSize = Math.max(vbW, vbH);
+    const qrSvg = await generateQrSvg(qrData, qrStyle, qrSize);
+    return composeFrameSvg({
+      frame,
+      qrSvgString: qrSvg,
+      backgroundColor,
+      borderColor,
+      borderWidth,
+      cta,
+      ctaBandColorOverride: ctaBandColor,
+      decorativeColorOverride: decorativeColor,
+    });
+  } else {
+    const shape = getShape(shapeId);
+    const [vbW, vbH] = shape.viewBox.split(' ').slice(2).map(Number);
+    const qrSize = Math.max(vbW, vbH);
+    const qrSvg = await generateQrSvg(qrData, qrStyle, qrSize);
+    return composeStickerSvg({
+      shape,
+      qrSvgString: qrSvg,
+      backgroundColor,
+      borderColor,
+      borderWidth,
+      cta,
+    });
+  }
 }
 
 // Helper: derive a QR-encodable string from type + payload
