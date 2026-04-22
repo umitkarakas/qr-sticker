@@ -1,10 +1,18 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Wix_Madefor_Display } from 'next/font/google';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/options';
 import '@/index.css';
 import { Providers } from './providers';
+
+const wixFont = Wix_Madefor_Display({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-wix',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'QRBir — QR Kod Oluşturucu',
@@ -19,15 +27,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="tr">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="tr" className={wixFont.variable}>
       <body className="min-h-screen bg-white font-sans text-brand-navy antialiased">
         <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/95 backdrop-blur-sm">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">

@@ -57,8 +57,8 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
-              URL'den vCard'a, WiFi'den PDF'e — markanıza özel şekil ve çerçevelerle
-              tasarlayın, kaydedin, istediğinizde indirin.
+              URL&apos;den vCard&apos;a, WiFi&apos;den PDF&apos;e — markanıza özel şekil
+              ve çerçevelerle tasarlayın, kaydedin, istediğinizde indirin.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">

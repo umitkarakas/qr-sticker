@@ -12,7 +12,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Wix Madefor Display', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-wix)', 'system-ui', 'sans-serif'],
       },
     },
   },
