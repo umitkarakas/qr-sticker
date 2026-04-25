@@ -10,6 +10,14 @@ export default {
           blue:  '#20A4DB',
           teal:  '#4CBBC2',
         },
+        glass: {
+          bg:     'rgba(255,255,255,0.6)',
+          'bg-md':'rgba(255,255,255,0.65)',
+          border: 'rgba(255,255,255,0.9)',
+        },
+        page: {
+          base: '#eef4fb',
+        },
       },
       fontFamily: {
         sans: ['var(--font-wix)', 'system-ui', 'sans-serif'],

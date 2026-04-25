@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { Mail, Lock } from 'lucide-react';
 
 export function LoginForm() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export function LoginForm() {
     setPending(false);
 
     if (!result || result.error) {
-      setError('Giris bilgileri dogrulanamadi.');
+      setError('Giriş bilgileri doğrulanamadı.');
       return;
     }
 
@@ -35,51 +36,61 @@ export function LoginForm() {
   }
 
   return (
-    <form action={handleSubmit} className="mt-8 space-y-5">
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-slate-700" htmlFor="email">
+    <form action={handleSubmit} className="space-y-4">
+      <div className="space-y-1.5">
+        <label className="block text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500" htmlFor="email">
           E-posta
         </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          className="input"
-          placeholder="ornek@qrbir.com"
-        />
+        <div className="relative">
+          <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            className="input input-icon"
+            placeholder="ornek@qrbir.com"
+          />
+        </div>
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-slate-700" htmlFor="password">
-          Sifre
+      <div className="space-y-1.5">
+        <label className="block text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500" htmlFor="password">
+          Şifre
         </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          minLength={8}
-          className="input"
-          placeholder="********"
-        />
+        <div className="relative">
+          <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            minLength={8}
+            className="input input-icon"
+            placeholder="••••••••"
+          />
+        </div>
       </div>
 
-      {registered ? <p className="text-sm text-emerald-600">Kayit basarili. Giris yapabilirsiniz.</p> : null}
-      {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+      {registered && <p className="text-sm text-emerald-600">Kayıt başarılı. Giriş yapabilirsiniz.</p>}
+      {error && <p className="text-sm text-rose-600">{error}</p>}
 
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-xl bg-fuchsia-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-fuchsia-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-1 w-full rounded-[13px] py-3 text-sm font-bold text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-60"
+        style={{
+          background: 'linear-gradient(135deg, #C026D3, #a21caf)',
+          boxShadow: '0 4px 16px rgba(192,38,211,0.3)',
+        }}
       >
-        {pending ? 'Giris yapiliyor...' : 'Giris yap'}
+        {pending ? 'Giriş yapılıyor...' : 'Giriş yap'}
       </button>
 
-      <p className="text-sm text-slate-500">
-        Hesabin yok mu?{' '}
-        <Link href="/register" className="font-medium text-fuchsia-600 hover:text-fuchsia-700">
-          Kayit ol
+      <p className="text-center text-sm text-slate-500">
+        Hesabın yok mu?{' '}
+        <Link href="/register" className="font-bold text-fuchsia-600 hover:text-fuchsia-700">
+          Kayıt ol
         </Link>
       </p>
     </form>

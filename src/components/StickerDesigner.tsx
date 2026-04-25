@@ -90,12 +90,22 @@ export function StickerDesigner({ editId, editTitle }: StickerDesignerProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+    <div className="flex items-center justify-center p-4">
+      <div
+        className="w-full max-w-4xl overflow-hidden flex flex-col md:flex-row"
+        style={{
+          background: 'rgba(255,255,255,0.6)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255,255,255,0.9)',
+          borderRadius: 24,
+          boxShadow: '0 12px 48px rgba(32,80,140,0.12), inset 0 1px 0 rgba(255,255,255,0.95)',
+        }}
+      >
         {/* Left panel — controls */}
-        <div className="w-full md:w-80 border-r border-gray-100 flex flex-col">
+        <div className="w-full md:w-80 flex flex-col" style={{ borderRight: '1px solid rgba(203,213,225,0.4)' }}>
           {/* Header */}
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(243,244,246,0.8)' }}>
             <h1 className="text-base font-bold text-gray-800">QR Sticker Designer</h1>
             <div className="flex items-center gap-1.5">
               <button
@@ -118,7 +128,7 @@ export function StickerDesigner({ editId, editTitle }: StickerDesignerProps) {
           </div>
 
           {/* Tab bar */}
-          <div className="flex border-b border-gray-100">
+          <div className="flex" style={{ borderBottom: '1px solid rgba(243,244,246,0.8)' }}>
             {TABS.map((tab) => (
               <button
                 key={tab.id}
@@ -145,7 +155,10 @@ export function StickerDesigner({ editId, editTitle }: StickerDesignerProps) {
         </div>
 
         {/* Right panel — preview */}
-        <div className="flex-1 bg-gray-50 flex flex-col items-center justify-center p-8">
+        <div
+          className="flex-1 flex flex-col items-center justify-center p-8"
+          style={{ background: 'rgba(238,244,251,0.7)' }}
+        >
           <StickerPreview />
         </div>
       </div>

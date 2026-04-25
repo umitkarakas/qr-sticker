@@ -42,7 +42,13 @@ export function QrGrid({ initialQrCodes }: QrGridProps) {
 
   if (qrCodes.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-white py-20 px-6 text-center">
+      <div
+        className="flex flex-col items-center justify-center rounded-3xl py-20 px-6 text-center"
+        style={{
+          background: 'rgba(255,255,255,0.5)',
+          border: '1px dashed rgba(148,163,184,0.5)',
+        }}
+      >
         <p className="text-lg font-semibold text-slate-700">Henüz QR kodun yok</p>
         <p className="mt-2 text-sm text-slate-500">İlk QR kodunu oluşturmak için aşağıdaki butona tıkla.</p>
         <Link

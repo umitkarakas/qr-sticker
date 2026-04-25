@@ -35,31 +35,49 @@ export default async function DashboardPage() {
   }));
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-12">
-      <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-        {/* Header */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-fuchsia-600">
-              Dashboard
-            </p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
-              QR Kodlarım
-            </h1>
+    <main
+      className="min-h-screen"
+      style={{
+        background:
+          'radial-gradient(ellipse at 10% 20%, rgba(32,164,219,0.13) 0%, transparent 55%), radial-gradient(ellipse at 90% 85%, rgba(76,187,194,0.13) 0%, transparent 50%), #eef4fb',
+      }}
+    >
+      <div className="mx-auto max-w-7xl px-6 py-12">
+        <div
+          className="rounded-3xl p-8"
+          style={{
+            background: 'rgba(255,255,255,0.6)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255,255,255,0.9)',
+            boxShadow: '0 8px 32px rgba(32,80,140,0.08), inset 0 1px 0 rgba(255,255,255,0.95)',
+          }}
+        >
+          {/* Header */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-fuchsia-600">
+                Dashboard
+              </p>
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
+                QR Kodlarım
+              </h1>
+            </div>
+            <div className="flex items-center gap-3">
+              <Link
+                href="/qr-code-generator"
+                className="rounded-xl px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+                style={{ background: '#C026D3' }}
+              >
+                + Yeni QR Oluştur
+              </Link>
+              <LogoutButton />
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/qr-code-generator"
-              className="rounded-xl bg-fuchsia-600 px-4 py-2 text-sm font-semibold text-white hover:bg-fuchsia-700 transition-colors"
-            >
-              + Yeni QR Oluştur
-            </Link>
-            <LogoutButton />
-          </div>
-        </div>
 
-        {/* Grid */}
-        <QrGrid initialQrCodes={serialized} />
+          {/* Grid */}
+          <QrGrid initialQrCodes={serialized} />
+        </div>
       </div>
     </main>
   );

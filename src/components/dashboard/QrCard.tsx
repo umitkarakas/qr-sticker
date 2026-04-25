@@ -136,9 +136,22 @@ export function QrCard({ qr, onDeleteRequest, onDuplicateRequest }: QrCardProps)
   });
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col">
+    <div
+      className="flex flex-col overflow-hidden"
+      style={{
+        background: 'rgba(255,255,255,0.65)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255,255,255,0.85)',
+        borderRadius: 16,
+        boxShadow: '0 2px 12px rgba(32,80,140,0.07)',
+      }}
+    >
       {/* Thumbnail area */}
-      <div className="flex items-center justify-center bg-slate-50 p-4 h-36 relative">
+      <div
+        className="flex items-center justify-center p-4 h-36 relative"
+        style={{ background: 'linear-gradient(135deg, rgba(32,164,219,0.08), rgba(76,187,194,0.08))' }}
+      >
         <div ref={canvasRef} className="absolute opacity-0 pointer-events-none" aria-hidden="true" />
         {thumbnailUrl && (
           <img src={thumbnailUrl} alt={qr.title} className="h-28 w-28 object-contain" />
@@ -160,7 +173,7 @@ export function QrCard({ qr, onDeleteRequest, onDuplicateRequest }: QrCardProps)
       </div>
 
       {/* Action buttons */}
-      <div className="border-t border-slate-100 relative">
+      <div className="relative" style={{ borderTop: '1px solid rgba(203,213,225,0.45)' }}>
         <div className="flex">
           <button
             onClick={handleEdit}
@@ -173,7 +186,7 @@ export function QrCard({ qr, onDeleteRequest, onDuplicateRequest }: QrCardProps)
           <button
             onClick={() => onDuplicateRequest(qr.id)}
             title="Kopyala"
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors border-x border-slate-100"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-slate-600 hover:bg-white/50 hover:text-slate-900 transition-colors border-x border-white/45"
           >
             <Copy size={14} />
             Kopyala
@@ -181,7 +194,7 @@ export function QrCard({ qr, onDeleteRequest, onDuplicateRequest }: QrCardProps)
           <button
             onClick={() => onDeleteRequest(qr.id)}
             title="Sil"
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors border-r border-slate-100"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-red-500 hover:bg-red-50/60 hover:text-red-700 transition-colors border-r border-white/45"
           >
             <Trash2 size={14} />
             Sil
