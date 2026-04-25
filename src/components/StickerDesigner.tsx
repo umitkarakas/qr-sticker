@@ -119,7 +119,7 @@ export function StickerDesigner({ editId, editTitle }: StickerDesignerProps) {
                 onClick={handleSaveClick}
                 disabled={status === 'loading'}
                 title="Kaydet"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-brand-blue hover:bg-[#1a93c5] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
               >
                 <Save size={13} />
                 Kaydet
@@ -135,7 +135,7 @@ export function StickerDesigner({ editId, editTitle }: StickerDesignerProps) {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 flex items-center justify-center gap-1.5 py-3 text-xs font-semibold transition-colors ${
                   activeTab === tab.id
-                    ? 'text-blue-600 border-b-2 border-blue-600'
+                    ? 'text-brand-blue border-b-2 border-brand-blue'
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
               >

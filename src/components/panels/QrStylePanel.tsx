@@ -46,7 +46,7 @@ export function QrStylePanel() {
               onClick={() => dispatch({ type: 'SET_QR_STYLE', payload: { dotType: value } })}
               className={`px-2 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 qrStyle.dotType === value
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-brand-blue text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -82,7 +82,7 @@ export function QrStylePanel() {
               onClick={() => dispatch({ type: 'SET_QR_STYLE', payload: { cornerSquareType: value } })}
               className={`flex-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 qrStyle.cornerSquareType === value
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-brand-blue text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -104,7 +104,7 @@ export function QrStylePanel() {
               onClick={() => dispatch({ type: 'SET_QR_STYLE', payload: { cornerDotType: value } })}
               className={`flex-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 qrStyle.cornerDotType === value
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-brand-blue text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -140,7 +140,7 @@ export function QrStylePanel() {
               onClick={() => dispatch({ type: 'SET_QR_STYLE', payload: { errorCorrection: value } })}
               className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                 qrStyle.errorCorrection === value
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-brand-blue text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -184,7 +184,7 @@ export function QrStylePanel() {
             step={1}
             value={state.borderWidth}
             onChange={(e) => dispatch({ type: 'SET_BORDER_WIDTH', payload: Number(e.target.value) })}
-            className="w-full accent-blue-600"
+            className="w-full accent-brand-blue"
           />
         </div>
       </div>

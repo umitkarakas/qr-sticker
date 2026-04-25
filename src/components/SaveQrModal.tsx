@@ -68,7 +68,7 @@ export function SaveQrModal({ isOpen, onClose, onSave, isSaving, error }: SaveQr
           <button
             onClick={handleSubmit}
             disabled={isSaving || name.trim().length === 0}
-            className="px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
+            className="px-3 py-1.5 text-xs font-semibold text-white bg-brand-blue hover:bg-[#1a93c5] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
           >
             {isSaving ? 'Kaydediliyor...' : 'Kaydet'}
           </button>

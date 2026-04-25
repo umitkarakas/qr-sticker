@@ -30,7 +30,7 @@ export function FramePanel() {
           onClick={() => dispatch({ type: 'CLEAR_FRAME' })}
           className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
             !state.frameId
-              ? 'bg-blue-600 text-white'
+              ? 'bg-brand-blue text-white'
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
         >
@@ -210,7 +210,7 @@ function FramePreviewButton({
       title={frame.name}
       className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${
         isSelected
-          ? 'bg-blue-600 shadow-md ring-2 ring-blue-400'
+          ? 'bg-brand-blue shadow-md ring-2 ring-brand-blue/40'
           : 'bg-gray-100 hover:bg-gray-200'
       }`}
     >

@@ -135,7 +135,7 @@ export function StickerPreview() {
         <button
           onClick={handleDownloadPng}
           disabled={!svgString || loading}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white text-sm font-medium rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-brand-blue hover:bg-[#1a93c5] disabled:opacity-40 text-white text-sm font-medium rounded-lg transition-colors"
         >
           <Download size={14} />
           PNG indir

@@ -46,7 +46,7 @@ function ShapeGroup({
             title={shape.name}
             className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${
               selected === shape.id
-                ? 'bg-blue-600 shadow-md ring-2 ring-blue-400'
+                ? 'bg-brand-blue shadow-md ring-2 ring-brand-blue/40'
                 : 'bg-gray-100 hover:bg-gray-200'
             }`}
           >
