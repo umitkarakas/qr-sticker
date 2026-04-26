@@ -10,17 +10,4 @@ module.exports = {
       { userAgent: '*', disallow: ['/api/', '/dashboard/'] },
     ],
   },
-  additionalPaths: async (config) => {
-    // Blog post slugs — keep in sync with src/content/blog/index.ts
-    const slugs = [
-      'restoran-icin-qr-menu-nasil-olusturulur',
-      'qr-kod-nedir-nasil-calisir',
-    ];
-    return slugs.map((slug) => ({
-      loc: `/blog/${slug}`,
-      changefreq: 'monthly',
-      priority: 0.6,
-      lastmod: new Date().toISOString(),
-    }));
-  },
 };
