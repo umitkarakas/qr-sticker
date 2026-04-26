@@ -8,6 +8,17 @@ import type { ContentType, DesignerState } from '@/lib/core/schemas';
 interface GeneratorWorkspaceProps {
   initialContentType?: ContentType;
   editId?: string;
+  presetPatch?: Partial<DesignerState>;
+}
+
+// Applies a preset patch on mount — must run inside DesignerProvider
+function PresetLoader({ patch }: { patch: Partial<DesignerState> }) {
+  const { dispatch } = useDesigner();
+  useEffect(() => {
+    dispatch({ type: 'LOAD_PRESET', payload: patch });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return null;
 }
 
 // Fetches QR data and dispatches LOAD_QR — must run inside DesignerProvider
@@ -52,12 +63,13 @@ function EditLoader({
   return null;
 }
 
-export function GeneratorWorkspace({ initialContentType, editId }: GeneratorWorkspaceProps) {
+export function GeneratorWorkspace({ initialContentType, editId, presetPatch }: GeneratorWorkspaceProps) {
   const [editTitle, setEditTitle] = useState('');
   const handleTitleLoaded = useCallback((title: string) => setEditTitle(title), []);
 
   return (
     <DesignerProvider initialContentType={initialContentType}>
+      {presetPatch && !editId && <PresetLoader patch={presetPatch} />}
       {editId && <EditLoader editId={editId} onTitleLoaded={handleTitleLoaded} />}
       <StickerDesigner editId={editId} editTitle={editTitle} />
     </DesignerProvider>

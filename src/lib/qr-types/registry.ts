@@ -9,6 +9,9 @@ import {
   MapPin,
   FileText,
   Image as ImageIcon,
+  UtensilsCrossed,
+  Star,
+  Instagram,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { ContentType } from '@/lib/core/schemas';
@@ -23,7 +26,10 @@ export type GeneratorRouteType =
   | 'vcard'
   | 'map'
   | 'pdf'
-  | 'image';
+  | 'image'
+  | 'menu'
+  | 'google-review'
+  | 'instagram';
 
 export interface QrTypeDefinition {
   routeType: GeneratorRouteType;
@@ -111,6 +117,30 @@ export const QR_TYPE_REGISTRY: QrTypeDefinition[] = [
     shortDescription: 'Görsel veya galeri yönlendirmesi.',
     icon: ImageIcon,
     status: 'planned',
+  },
+  {
+    routeType: 'menu',
+    contentType: 'menu',
+    label: 'Restoran Menüsü',
+    shortDescription: 'Dijital menüye yönlendiren QR kodu.',
+    icon: UtensilsCrossed,
+    status: 'ready',
+  },
+  {
+    routeType: 'google-review',
+    contentType: 'google-review',
+    label: 'Google Yorum',
+    shortDescription: 'Müşterilerinizi Google yorumlarına yönlendirin.',
+    icon: Star,
+    status: 'ready',
+  },
+  {
+    routeType: 'instagram',
+    contentType: 'instagram',
+    label: 'Instagram',
+    shortDescription: 'Instagram profiline yönlendirme.',
+    icon: Instagram,
+    status: 'ready',
   },
 ];
 

@@ -2,17 +2,19 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { GeneratorWorkspace } from '@/components/GeneratorWorkspace';
 import { getQrTypeDefinition } from '@/lib/qr-types/registry';
+import { getPreset } from '@/lib/presets';
 
 export default async function QrTypePage({
   params,
   searchParams,
 }: {
   params: Promise<{ type: string }>;
-  searchParams: Promise<{ edit?: string }>;
+  searchParams: Promise<{ edit?: string; preset?: string }>;
 }) {
   const { type } = await params;
-  const { edit: editId } = await searchParams;
+  const { edit: editId, preset: presetKey } = await searchParams;
   const definition = getQrTypeDefinition(type);
+  const presetPatch = presetKey ? getPreset(presetKey) : undefined;
 
   if (!definition) {
     notFound();
@@ -48,7 +50,7 @@ export default async function QrTypePage({
       </div>
 
       {definition.contentType ? (
-        <GeneratorWorkspace initialContentType={definition.contentType} editId={editId} />
+        <GeneratorWorkspace initialContentType={definition.contentType} editId={editId} presetPatch={presetPatch} />
       ) : (
         <section
           className="rounded-3xl p-10 text-center"
