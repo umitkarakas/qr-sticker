@@ -11,9 +11,11 @@ module.exports = {
     ],
   },
   additionalPaths: async (config) => {
-    // Blog posts
-    const { getAllSlugs } = require('./src/content/blog');
-    const slugs = getAllSlugs();
+    // Blog post slugs — keep in sync with src/content/blog/index.ts
+    const slugs = [
+      'restoran-icin-qr-menu-nasil-olusturulur',
+      'qr-kod-nedir-nasil-calisir',
+    ];
     return slugs.map((slug) => ({
       loc: `/blog/${slug}`,
       changefreq: 'monthly',
